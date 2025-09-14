@@ -23,6 +23,11 @@ Aplikasi web untuk manajemen arsip surat digital menggunakan Django dan MySQL, d
    ```bash
    docker-compose up --build
    ```
+   Setelah perintah di atas dijalankan, buka browser dan akses:
+   ```
+   http://localhost:8000
+   ```
+   untuk melihat aplikasi Arsip Surat di web.
 3. Migrasi database:
    ```bash
    docker-compose exec web python manage.py migrate

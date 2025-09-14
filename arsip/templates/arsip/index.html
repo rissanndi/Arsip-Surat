@@ -1,35 +1,19 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arsip Surat</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Arsip Surat</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="container">
-    <div class="row mb-3">
-        <div class="col-md-8">
-            <form method="get" class="d-flex">
-                <input type="text" name="q" class="form-control me-2" placeholder="Cari judul surat..." value="{{ request.GET.q }}">
-                <button class="btn btn-primary" type="submit">Cari</button>
-            </form>
-        </div>
-        <div class="col-md-4 text-end">
-            <a href="{% url 'arsipkan' %}" class="btn btn-success">Arsipkan Surat..</a>
-        </div>
+{% extends 'arsip/base.html' %}
+
+{% block title %}Arsip Surat{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-8">
+                <form method="get" action="/surat/search/" class="d-flex">
+                    <input type="text" name="q" class="form-control me-2" placeholder="Cari judul surat..." value="{{ request.GET.q }}">
+                    <button class="btn btn-primary" type="submit">Cari</button>
+                </form>
+            </div>
+            <div class="col-md-4 text-end">
+                <a href="/surat/tambah/" class="btn btn-success">Arsipkan Surat..</a>
+            </div>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered align-middle">
@@ -51,10 +35,10 @@
                     <td>{{ surat.kategori.nama_kategori }}</td>
                     <td>{{ surat.tanggal_unggah|date:'d-m-Y H:i' }}</td>
                     <td>
-                        <a href="{% url 'unduh_surat' surat.id %}" class="btn btn-outline-info btn-sm">Unduh</a>
+                        <a href="/surat/unduh/{{ surat.id }}/" class="btn btn-outline-info btn-sm">Unduh</a>
                     </td>
                     <td>
-                        <a href="{% url 'lihat_surat' surat.id %}" class="btn btn-outline-secondary btn-sm">Lihat &gt;&gt;</a>
+                        <a href="/surat/detail/{{ surat.id }}/" class="btn btn-outline-secondary btn-sm">Lihat &gt;&gt;</a>
                         <button class="btn btn-outline-danger btn-sm" onclick="confirmHapus('{{ surat.id }}')">Hapus</button>
                     </td>
                 </tr>
@@ -95,9 +79,8 @@
 function confirmHapus(id) {
     var modal = new bootstrap.Modal(document.getElementById('modalHapus'));
     var form = document.getElementById('formHapus');
-    form.action = '/hapus/' + id + '/';
+    form.action = "/surat/hapus/" + id + "/";
     modal.show();
 }
 </script>
-</body>
-</html>
+{% endblock %}
