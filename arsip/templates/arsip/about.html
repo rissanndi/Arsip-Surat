@@ -4,52 +4,69 @@
 {% block title %}About - Aplikasi Arsip Surat{% endblock %}
 
 {% block content %}
-<div class="container-fluid py-4">
+<div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <div class="text-center mb-4">
-                        <h2 class="mb-4">About - Aplikasi Arsip Surat</h2>
-                        <!-- Note: Replace the src with your actual photo -->
-                        <img src="{% static 'arsip/img/foto.jpg' %}" 
-                             alt="Foto Risandi" 
-                             class="rounded-circle mb-3"
-                             style="width: 200px; height: 200px; object-fit: cover; border: 3px solid #007bff;">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-5">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center">
+                            <div class="position-relative" style="margin-top: 48px; margin-bottom: 32px;">
+                                <img src="{% static 'arsip/img/423027885.jpg' %}"
+                                     alt="Foto Risandi"
+                                     class="rounded-circle shadow-lg border border-4"
+                                     style="width: 220px; height: 220px; object-fit: cover; border-color: #fff; background: radial-gradient(circle at 60% 40%, #e52d27 60%, #b31217 100%);">
+                                <div class="position-absolute bottom-0 end-0">
+                                    <span class="badge rounded-pill bg-primary px-3 py-2">
+                                        <i class="bi bi-code-slash me-1"></i>Developer
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                         
-                        <div class="developer-info">
-                            <h3 class="mb-3">Developer Information</h3>
-                            <div class="row justify-content-center">
-                                <div class="col-md-6">
-                                    <table class="table table-borderless">
-                                        <tr>
-                                            <td class="text-end fw-bold">Nama:</td>
-                                            <td class="text-start">Regiza Rahmadika Risandi</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-end fw-bold">NIM:</td>
-                                            <td class="text-start">2331730001</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-end fw-bold">Prodi:</td>
-                                            <td class="text-start">D3-Manajemen Informatika</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-end fw-bold">Tanggal Pembuatan:</td>
-                                            <td class="text-start">14 September 2025</td>
-                                        </tr>
-                                    </table>
+                        <div class="col-md-8">
+                            <h2 class="display-6 mb-4">About - Aplikasi Arsip Surat</h2>
+                            <div class="developer-info bg-light p-4 rounded-3">
+                                <h5 class="text-primary mb-4">
+                                    <i class="bi bi-person-badge me-2"></i>Developer Information
+                                </h5>
+                                <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <div class="p-3 bg-white rounded-3 shadow-sm">
+                                            <small class="text-muted d-block">Nama</small>
+                                            <strong>Regiza Rahmadika Risandi</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="p-3 bg-white rounded-3 shadow-sm">
+                                            <small class="text-muted d-block">NIM</small>
+                                            <strong>2331730001</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="p-3 bg-white rounded-3 shadow-sm">
+                                            <small class="text-muted d-block">Program Studi</small>
+                                            <strong>D3-Manajemen Informatika</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="p-3 bg-white rounded-3 shadow-sm">
+                                            <small class="text-muted d-block">Tanggal Pembuatan</small>
+                                            <strong>14 September 2025</strong>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="text-center mt-4">
-                        <p class="text-muted">
+                    <div class="text-center mt-5">
+                        <p class="text-muted mb-2">
                             Aplikasi ini dibuat sebagai proyek untuk mengelola arsip surat secara digital.
-                            <br>
-                            © 2025 Aplikasi Arsip Surat - All rights reserved
                         </p>
+                        <small class="text-muted">
+                            © 2025 Aplikasi Arsip Surat - All rights reserved
+                        </small>
                     </div>
                 </div>
             </div>

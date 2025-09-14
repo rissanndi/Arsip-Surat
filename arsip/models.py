@@ -14,6 +14,7 @@ class Surat(models.Model):
     judul = models.CharField(max_length=255)
     kategori = models.ForeignKey(KategoriSurat, on_delete=models.PROTECT)  # Changed to PROTECT to prevent accidental deletion
     file_pdf = models.FileField(upload_to='surat_pdf/')
+    foto = models.ImageField(upload_to='surat_foto/', blank=True, null=True)  # New field for photo
     tanggal_unggah = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

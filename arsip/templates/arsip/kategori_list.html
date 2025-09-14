@@ -3,7 +3,7 @@
 {% block title %}Kategori Surat{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="px-3">
     {% if messages %}
         {% for message in messages %}
             <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %} alert-dismissible fade show" role="alert">
@@ -13,57 +13,70 @@
         {% endfor %}
     {% endif %}
 
-    <div class="row mb-3">
+    <div class="mb-3">
+        <h2 class="mb-2">Kategori Surat</h2>
+        <p class="text-muted mb-1">Berikut ini adalah kategori yang bisa digunakan untuk melabeli surat.</p>
+        <p class="text-muted">Klik "Tambah" pada kolom aksi untuk menambahkan kategori baru.</p>
+    </div>
+
+    <div class="row align-items-center mb-3">
         <div class="col">
-            <h2>Kategori Surat</h2>
-        </div>
-        <div class="col text-end">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahKategori">
-                <i class="bi bi-plus-circle"></i> Tambah Kategori
-            </button>
+            <div class="d-flex align-items-center">
+                <label for="search" class="me-2">Cari kategori:</label>
+                <div class="input-group" style="max-width: 500px;">
+                    <input type="text" id="search" class="form-control" placeholder="Search...">
+                    <button class="btn btn-primary px-4" type="button">Cari</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-body">
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover mb-0">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Nama Kategori</th>
-                            <th width="200">Aksi</th>
+                            <th class="py-3 px-3" style="width: 5%">ID</th>
+                            <th class="py-3" style="width: 20%">Nama Kategori</th>
+                            <th class="py-3" style="width: 55%">Keterangan</th>
+                            <th class="py-3" style="width: 20%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for kategori in kategori_list %}
                         <tr>
-                            <td>{{ forloop.counter }}</td>
+                            <td class="px-3">{{ forloop.counter }}</td>
+                            <td>{{ kategori.nama }}</td>
+                            <td>{{ kategori.keterangan|default:"-" }}</td>
                             <td>
-                                {{ kategori.nama }}
-                                {% if kategori.keterangan %}
-                                    <br>
-                                    <small class="text-muted">{{ kategori.keterangan }}</small>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <button class="btn btn-warning btn-sm" onclick="editKategori({{ kategori.id }})">
-                                    <i class="bi bi-pencil"></i> Edit
-                                </button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ kategori.id }}, '{{ kategori.nama }}')">
-                                    <i class="bi bi-trash"></i> Hapus
-                                </button>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ kategori.id }}, '{{ kategori.nama }}')" title="Hapus">
+                                        Hapus
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="editKategori({{ kategori.id }})" title="Edit">
+                                        Edit
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="3" class="text-center">Tidak ada data kategori.</td>
+                            <td colspan="4" class="text-center py-3">
+                                Tidak ada data kategori.
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
+    
+    <div class="mt-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahKategori">
+            <i class="bi bi-plus-circle"></i> Tambah Kategori Baru
+        </button>
     </div>
 </div>
 
@@ -74,22 +87,22 @@
             <form method="post">
                 {% csrf_token %}
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Kategori</h5>
+                    <h5 class="modal-title">Tambah Kategori Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Nama Kategori</label>
+                        <label class="form-label">Nama Kategori:</label>
                         <input type="text" name="nama" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Keterangan</label>
+                        <label class="form-label">Keterangan:</label>
                         <textarea name="keterangan" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                 </div>
             </form>
         </div>
@@ -163,63 +176,6 @@ function confirmDelete(id, nama) {
     document.getElementById('namaKategoriHapus').textContent = nama;
     document.getElementById('formHapusKategori').action = `/kategori/delete/${id}/`;
     new bootstrap.Modal(document.getElementById('modalKonfirmasiHapus')).show();
-}
-</script>
-                        <label class="form-label">Nama Kategori</label>
-                        <input type="text" name="nama_kategori" id="editNamaKategori" class="form-control" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Konfirmasi Hapus -->
-<div class="modal fade" id="modalHapusKategori" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form method="post" id="formHapusKategori">
-                {% csrf_token %}
-                <div class="modal-header">
-                    <h5 class="modal-title">Konfirmasi Hapus</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Apakah Anda yakin ingin menghapus kategori ini?</p>
-                    <p id="kategoriInfo" class="text-muted"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger">Ya</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script>
-function editKategori(id, nama) {
-    var modal = new bootstrap.Modal(document.getElementById('modalEditKategori'));
-    var form = document.getElementById('formEditKategori');
-    var input = document.getElementById('editNamaKategori');
-    
-    form.action = '/kategori/edit/' + id + '/';
-    input.value = nama;
-    modal.show();
-}
-
-function confirmHapusKategori(id, nama) {
-    var modal = new bootstrap.Modal(document.getElementById('modalHapusKategori'));
-    var form = document.getElementById('formHapusKategori');
-    var info = document.getElementById('kategoriInfo');
-    
-    form.action = '/kategori/hapus/' + id + '/';
-    info.textContent = '"' + nama + '"';
-    modal.show();
 }
 </script>
 {% endblock %}

@@ -1,54 +1,82 @@
 {% extends 'arsip/base.html' %}
 
-{% block title %}Lihat Arsip Surat{% endblock %}
+{% block title %}Arsip Surat >> Lihat{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row mb-4">
-        <div class="col">
-            <h2>Arsip Surat >> Lihat</h2>
-        </div>
+<div class="px-4">
+    <div class="mb-4">
+        <h2>Arsip Surat >> Lihat</h2>
+        <p class="text-muted mb-0">Nomor: {{ surat.nomor_surat }}</p>
     </div>
 
-    <div class="row">
-        <div class="col">
+    <div class="row mb-4">
+        <div class="col-12">
             <div class="card">
-                <div class="card-body">
-                    <table class="table table-borderless">
-                        <tr>
-                            <td style="width: 150px">Nomor Surat</td>
-                            <td style="width: 20px">:</td>
-                            <td>{{ surat.nomor_surat }}</td>
-                        </tr>
-                        <tr>
-                            <td>Kategori</td>
-                            <td>:</td>
-                            <td>{{ surat.kategori.nama_kategori }}</td>
-                        </tr>
-                        <tr>
-                            <td>Judul</td>
-                            <td>:</td>
-                            <td>{{ surat.judul }}</td>
-                        </tr>
-                        <tr>
-                            <td>Waktu Unggah</td>
-                            <td>:</td>
-                            <td>{{ surat.tanggal_unggah|date:"d-m-Y H:i:s" }}</td>
-                        </tr>
-                    </table>
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h5 class="mb-3">Informasi Surat</h5>
+                            <div class="table-responsive">
+                                <table class="table table-borderless" style="max-width: 600px">
+                                    <tr>
+                                        <td style="width: 140px" class="text-muted">Nomor Surat</td>
+                                        <td style="width: 20px" class="text-muted">:</td>
+                                        <td>{{ surat.nomor_surat }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Kategori</td>
+                                        <td class="text-muted">:</td>
+                                        <td>{{ surat.kategori.nama }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Judul</td>
+                                        <td class="text-muted">:</td>
+                                        <td>{{ surat.judul }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">Waktu Unggah</td>
+                                        <td class="text-muted">:</td>
+                                        <td>{{ surat.tanggal_unggah|date:"d-m-Y H:i" }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
 
-                    <div class="mt-4">
-                        <p><strong>File Preview:</strong></p>
-                        <embed src="/surat/unduh/{{ surat.pk }}/" type="application/pdf" width="100%" height="600px" />
+                        <div class="ms-auto">
+                            <a href="{% url 'arsip:index' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left me-1"></i> Kembali
+                            </a>
+                            <a href="{% url 'arsip:unduh_surat' pk=surat.pk %}?download=true" class="btn btn-primary">
+                                <i class="bi bi-download me-1"></i> Unduh
+                            </a>
+                        </div>
                     </div>
 
+                    {% if surat.foto %}
                     <div class="mt-4">
-                        <a href="/" class="btn btn-outline-secondary">
-                            <i class="bi bi-arrow-left"></i> Kembali &lt;&lt;
-                        </a>
-                        <a href="/surat/unduh/{{ surat.pk }}/?download=true" class="btn btn-outline-primary">
-                            <i class="bi bi-download"></i> Unduh
-                        </a>
+                        <h5 class="mb-3">Foto</h5>
+                        <div class="bg-light p-3 rounded">
+                            <img src="{{ surat.foto.url }}" alt="Foto Surat" class="img-fluid rounded mx-auto d-block" style="max-height: 400px;">
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-4">
+                        <h5 class="mb-3">File Surat</h5>
+                        <div class="bg-white rounded shadow-sm position-relative" style="height: calc(100vh - 300px); min-height: 600px;">
+                            {% if surat.file_pdf %}
+                                <iframe
+                                    src="{% url 'arsip:unduh_surat' pk=surat.pk %}"
+                                    class="position-absolute top-0 start-0 w-100 h-100 rounded"
+                                    style="border: none; background: white;"
+                                    allowfullscreen
+                                ></iframe>
+                            {% else %}
+                                <div class="text-center py-5">
+                                    <p class="text-muted">File PDF tidak tersedia</p>
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
