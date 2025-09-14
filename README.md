@@ -1,4 +1,52 @@
+# Arsip Surat
 
+## Tujuan
+Aplikasi Arsip Surat dibuat untuk memudahkan pengelolaan, pencarian, dan penyimpanan arsip surat secara digital di lingkungan instansi atau organisasi.
+
+## Fitur
+- Manajemen surat masuk dan keluar
+- Upload file surat (PDF)
+- Kategori surat
+- Pencarian surat
+- Detail surat dan unduh file
+- Upload foto surat (opsional)
+- Tampilan responsif dan modern
+
+## Cara Menjalankan
+1. **Clone repository**
+   ```bash
+   git clone https://github.com/rissanndi/Arsip-Surat.git
+   cd Arsip-Surat/arsip_surat_project
+   ```
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Migrasi database**
+   ```bash
+   python manage.py migrate
+   ```
+4. **Jalankan server**
+   ```bash
+   python manage.py runserver
+   ```
+5. **Akses aplikasi**
+   Buka browser dan akses `http://localhost:8000/`
+
+## Screenshot
+
+### Halaman About
+![About](screenshots/about.png)
+
+### Form Unggah Surat
+![Form Surat](screenshots/form_surat.png)
+
+### Detail Surat
+![Detail Surat](screenshots/detail_surat.png)
+
+---
+
+© 2025 Arsip Surat
 # Arsip Surat
 
 Aplikasi web untuk manajemen arsip surat digital menggunakan Django dan MySQL, dijalankan dengan Docker.
