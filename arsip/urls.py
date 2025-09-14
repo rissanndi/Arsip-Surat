@@ -11,6 +11,10 @@ urlpatterns = [
     path('surat/hapus/<int:pk>/', views.hapus_surat, name='hapus_surat'),
     path('surat/unduh/<int:pk>/', views.unduh_surat, name='unduh_surat'),
     path('surat/search/', views.search_surat, name='search_surat'),
+    # Category management URLs
+    path('kategori/', views.kategori_list, name='kategori_list'),
+    path('kategori/update/<int:pk>/', views.update_kategori, name='update_kategori'),
+    path('kategori/delete/<int:pk>/', views.delete_kategori, name='delete_kategori'),
 ]
 
 if settings.DEBUG:

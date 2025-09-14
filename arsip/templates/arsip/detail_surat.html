@@ -1,24 +1,55 @@
 {% extends 'arsip/base.html' %}
 
-{% block title %}Detail Surat{% endblock %}
+{% block title %}Lihat Arsip Surat{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8 offset-md-2">
-        <h2>Detail Surat</h2>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ surat.judul }}</h5>
-                <p class="card-text">
-                    <strong>Nomor Surat:</strong> {{ surat.nomor_surat }}<br>
-                    <strong>Kategori:</strong> {{ surat.kategori }}<br>
-                    <strong>Tanggal Upload:</strong> {{ surat.tanggal_unggah|date:"d F Y H:i" }}
-                </p>
-                <div class="mt-3">
-                    <a href="/surat/unduh/{{ surat.pk }}/" class="btn btn-primary">
-                        <i class="bi bi-download"></i> Unduh PDF
-                    </a>
-                    <a href="/" class="btn btn-secondary">Kembali</a>
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Arsip Surat >> Lihat</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td style="width: 150px">Nomor Surat</td>
+                            <td style="width: 20px">:</td>
+                            <td>{{ surat.nomor_surat }}</td>
+                        </tr>
+                        <tr>
+                            <td>Kategori</td>
+                            <td>:</td>
+                            <td>{{ surat.kategori.nama_kategori }}</td>
+                        </tr>
+                        <tr>
+                            <td>Judul</td>
+                            <td>:</td>
+                            <td>{{ surat.judul }}</td>
+                        </tr>
+                        <tr>
+                            <td>Waktu Unggah</td>
+                            <td>:</td>
+                            <td>{{ surat.tanggal_unggah|date:"d-m-Y H:i:s" }}</td>
+                        </tr>
+                    </table>
+
+                    <div class="mt-4">
+                        <p><strong>File Preview:</strong></p>
+                        <embed src="/surat/unduh/{{ surat.pk }}/" type="application/pdf" width="100%" height="600px" />
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="/" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Kembali &lt;&lt;
+                        </a>
+                        <a href="/surat/unduh/{{ surat.pk }}/?download=true" class="btn btn-outline-primary">
+                            <i class="bi bi-download"></i> Unduh
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

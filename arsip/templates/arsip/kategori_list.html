@@ -1,0 +1,225 @@
+{% extends 'arsip/base.html' %}
+
+{% block title %}Kategori Surat{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row mb-3">
+        <div class="col">
+            <h2>Kategori Surat</h2>
+        </div>
+        <div class="col text-end">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahKategori">
+                <i class="bi bi-plus-circle"></i> Tambah Kategori
+            </button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Kategori</th>
+                            <th width="200">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for kategori in kategori_list %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>
+                                {{ kategori.nama }}
+                                {% if kategori.keterangan %}
+                                    <br>
+                                    <small class="text-muted">{{ kategori.keterangan }}</small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button class="btn btn-warning btn-sm" onclick="editKategori({{ kategori.id }})">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ kategori.id }}, '{{ kategori.nama }}')">
+                                    <i class="bi bi-trash"></i> Hapus
+                                </button>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center">Tidak ada data kategori.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Tambah Kategori -->
+<div class="modal fade" id="modalTambahKategori" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Kategori</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nama Kategori</label>
+                        <input type="text" name="nama" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Keterangan</label>
+                        <textarea name="keterangan" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit Kategori -->
+<div class="modal fade" id="modalEditKategori" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="formEditKategori">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Kategori</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nama Kategori</label>
+                        <input type="text" name="nama" id="editNama" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Keterangan</label>
+                        <textarea name="keterangan" id="editKeterangan" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Konfirmasi Hapus -->
+<div class="modal fade" id="modalKonfirmasiHapus" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="formHapusKategori">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus kategori <strong id="namaKategoriHapus"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function editKategori(id) {
+    fetch(`/kategori/update/${id}/`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('editNama').value = data.nama;
+            document.getElementById('editKeterangan').value = data.keterangan;
+            document.getElementById('formEditKategori').action = `/kategori/update/${id}/`;
+            new bootstrap.Modal(document.getElementById('modalEditKategori')).show();
+        });
+}
+
+function confirmDelete(id, nama) {
+    document.getElementById('namaKategoriHapus').textContent = nama;
+    document.getElementById('formHapusKategori').action = `/kategori/delete/${id}/`;
+    new bootstrap.Modal(document.getElementById('modalKonfirmasiHapus')).show();
+}
+</script>
+                        <label class="form-label">Nama Kategori</label>
+                        <input type="text" name="nama_kategori" id="editNamaKategori" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Konfirmasi Hapus -->
+<div class="modal fade" id="modalHapusKategori" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="formHapusKategori">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus kategori ini?</p>
+                    <p id="kategoriInfo" class="text-muted"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Ya</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function editKategori(id, nama) {
+    var modal = new bootstrap.Modal(document.getElementById('modalEditKategori'));
+    var form = document.getElementById('formEditKategori');
+    var input = document.getElementById('editNamaKategori');
+    
+    form.action = '/kategori/edit/' + id + '/';
+    input.value = nama;
+    modal.show();
+}
+
+function confirmHapusKategori(id, nama) {
+    var modal = new bootstrap.Modal(document.getElementById('modalHapusKategori'));
+    var form = document.getElementById('formHapusKategori');
+    var info = document.getElementById('kategoriInfo');
+    
+    form.action = '/kategori/hapus/' + id + '/';
+    info.textContent = '"' + nama + '"';
+    modal.show();
+}
+</script>
+{% endblock %}

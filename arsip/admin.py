@@ -3,8 +3,8 @@ from .models import KategoriSurat, Surat
 
 @admin.register(KategoriSurat)
 class KategoriSuratAdmin(admin.ModelAdmin):
-    list_display = ('nama_kategori',)
-    search_fields = ('nama_kategori',)
+    list_display = ('nama', 'keterangan')
+    search_fields = ('nama', 'keterangan')
 
 @admin.register(Surat)
 class SuratAdmin(admin.ModelAdmin):

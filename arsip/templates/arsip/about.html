@@ -1,27 +1,56 @@
 {% extends 'arsip/base.html' %}
+{% load static %}
 
-{% block title %}About{% endblock %}
+{% block title %}About - Aplikasi Arsip Surat{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-8 offset-md-2">
-        <h2>About</h2>
-        <div class="card">
-            <div class="card-body">
-                <h3>Aplikasi Arsip Surat</h3>
-                <p>Aplikasi ini dibuat untuk mengelola arsip surat di suatu organisasi. Dengan aplikasi ini, pengguna dapat:</p>
-                <ul>
-                    <li>Mencari surat berdasarkan judul</li>
-                    <li>Mengunggah surat baru</li>
-                    <li>Mengunduh file surat (PDF)</li>
-                    <li>Menghapus arsip surat</li>
-                </ul>
-                
-                <div class="mt-4">
-                    <h4>Developer Information</h4>
-                    <p><strong>Nama:</strong> Risandi</p>
-                    <p><strong>Prodi:</strong> D3-MI PENS</p>
-                    <p><strong>NIM:</strong> 3122500033</p>
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <h2 class="mb-4">About - Aplikasi Arsip Surat</h2>
+                        <!-- Note: Replace the src with your actual photo -->
+                        <img src="{% static 'arsip/img/foto.jpg' %}" 
+                             alt="Foto Risandi" 
+                             class="rounded-circle mb-3"
+                             style="width: 200px; height: 200px; object-fit: cover; border: 3px solid #007bff;">
+                        
+                        <div class="developer-info">
+                            <h3 class="mb-3">Developer Information</h3>
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <td class="text-end fw-bold">Nama:</td>
+                                            <td class="text-start">Regiza Rahmadika Risandi</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end fw-bold">NIM:</td>
+                                            <td class="text-start">2331730001</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end fw-bold">Prodi:</td>
+                                            <td class="text-start">D3-Manajemen Informatika</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-end fw-bold">Tanggal Pembuatan:</td>
+                                            <td class="text-start">14 September 2025</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <p class="text-muted">
+                            Aplikasi ini dibuat sebagai proyek untuk mengelola arsip surat secara digital.
+                            <br>
+                            © 2025 Aplikasi Arsip Surat - All rights reserved
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
