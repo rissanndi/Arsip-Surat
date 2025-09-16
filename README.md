@@ -1,37 +1,70 @@
 # Arsip Surat
 
-## Tujuan
-Aplikasi Arsip Surat dibuat untuk memudahkan pengelolaan, pencarian, dan penyimpanan arsip surat secara digital di lingkungan instansi atau organisasi.
+Aplikasi web untuk manajemen arsip surat digital di lingkungan instansi/organisasi. Dibangun dengan Django, Bootstrap, dan MySQL. Mendukung upload file PDF, pencarian, kategori, dan tampilan responsif.
 
-## Fitur
-- Manajemen surat masuk dan keluar
-- Upload file surat (PDF)
+---
+
+## Tujuan
+Menyediakan solusi digital untuk mengelola, mencari, dan menyimpan arsip surat secara efisien dan terstruktur.
+
+## Fitur Utama
+- Manajemen surat masuk & keluar
+- Upload & unduh file PDF surat
 - Kategori surat
-- Pencarian surat
-- Detail surat dan unduh file
+- Pencarian surat (search bar)
+- Detail surat & preview file
 - Upload foto surat (opsional)
-- Tampilan responsif dan modern
+- Hapus surat dengan konfirmasi modal
+- Menu About aplikasi
+- Tampilan responsif & modern
+
+---
 
 ## Cara Menjalankan
-1. **Clone repository**
+
+### 1. Jalankan Secara Manual (Tanpa Docker)
+1. Clone repository:
    ```bash
    git clone https://github.com/rissanndi/Arsip-Surat.git
    cd Arsip-Surat/arsip_surat_project
    ```
-2. **Install dependencies**
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-3. **Migrasi database**
+3. Migrasi database:
    ```bash
    python manage.py migrate
    ```
-4. **Jalankan server**
+4. Jalankan server:
    ```bash
    python manage.py runserver
    ```
-5. **Akses aplikasi**
-   Buka browser dan akses `http://localhost:8000/`
+5. Buka browser dan akses:
+   ```
+   http://localhost:8000/
+   ```
+
+### 2. Jalankan dengan Docker
+1. Clone repository:
+   ```bash
+   git clone https://github.com/rissanndi/Arsip-Surat.git
+   cd Arsip-Surat
+   ```
+2. Build & jalankan aplikasi:
+   ```bash
+   docker-compose up --build
+   ```
+3. Migrasi database (di container):
+   ```bash
+   docker-compose exec web python manage.py migrate
+   ```
+4. Untuk menghentikan aplikasi:
+   ```bash
+   docker-compose down
+   ```
+
+---
 
 ## Screenshot
 
@@ -46,48 +79,13 @@ Aplikasi Arsip Surat dibuat untuk memudahkan pengelolaan, pencarian, dan penyimp
 
 ---
 
-© 2025 Arsip Surat
-# Arsip Surat
-
-Aplikasi web untuk manajemen arsip surat digital menggunakan Django dan MySQL, dijalankan dengan Docker.
-
-## Fitur
-- Pencarian surat berdasarkan judul melalui search bar
-- Upload dan unduh file PDF surat
-- Hapus surat dengan konfirmasi modal
-- Lihat detail surat
-- Menu About aplikasi
-- Manajemen kategori surat
-
-## Cara Menjalankan
-
-## Cara Menjalankan dari Terminal
-1. Clone repository:
-   ```bash
-   git clone https://github.com/rissanndi/Arsip-Surat.git
-   cd Arsip-Surat
-   ```
-2. Build dan jalankan aplikasi:
-   ```bash
-   docker-compose up --build
-   ```
-   Setelah perintah di atas dijalankan, buka browser dan akses:
-   ```
-   http://localhost:8000
-   ```
-   untuk melihat aplikasi Arsip Surat di web.
-3. Migrasi database:
-   ```bash
-   docker-compose exec web python manage.py migrate
-   ```
-4. Untuk menghentikan aplikasi:
-   ```bash
-   docker-compose down
-   ```
-
 ## Struktur Folder
 ```
-manage.py
+arsip_surat_project/
+    settings.py
+    urls.py
+    wsgi.py
+    asgi.py
 arsip/
     models.py
     views.py
@@ -96,8 +94,18 @@ arsip/
     tests.py
     migrations/
     templates/
-arsip_surat_project/
-    settings.py
+manage.py
+Dockerfile
+docker-compose.yml
+requirements.txt
+README.md
+```
+
+## Kontribusi
+Silakan buat pull request atau issue jika ingin berkontribusi atau melaporkan bug.
+
+## Lisensi
+MIT
     urls.py
     wsgi.py
     asgi.py
