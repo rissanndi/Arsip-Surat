@@ -1,3 +1,23 @@
+def edit_surat(request, pk):
+    surat = get_object_or_404(Surat, pk=pk)
+    if request.method == 'POST':
+        form = SuratForm(request.POST, request.FILES, instance=surat)
+        if form.is_valid():
+            surat = form.save(commit=False)
+            # Update file_pdf jika ada file baru
+            if 'file_pdf' in request.FILES:
+                surat.file_pdf = request.FILES['file_pdf']
+            # Update foto jika ada file baru
+            if 'foto' in request.FILES:
+                surat.foto = request.FILES['foto']
+            surat.save()
+            messages.success(request, 'Data surat berhasil diperbarui')
+            return redirect('arsip:detail_surat', pk=surat.pk)
+        else:
+            messages.error(request, 'Periksa kembali data yang diinputkan')
+    else:
+        form = SuratForm(instance=surat)
+    return render(request, 'arsip/edit_surat.html', {'form': form, 'surat': surat})
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, FileResponse, JsonResponse
 from django.db.models import Q

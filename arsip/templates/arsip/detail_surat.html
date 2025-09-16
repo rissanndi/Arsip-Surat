@@ -17,7 +17,7 @@
                         <div>
                             <h5 class="mb-3">Informasi Surat</h5>
                             <div class="table-responsive">
-                                <table class="table table-borderless" style="max-width: 600px">
+                                <table class="table table-bordered table-lg" style="font-size:1.1rem; min-width:600px; max-width:900px;">
                                     <tr>
                                         <td style="width: 140px" class="text-muted">Nomor Surat</td>
                                         <td style="width: 20px" class="text-muted">:</td>
@@ -43,12 +43,15 @@
                         </div>
 
                         <div class="ms-auto">
-                            <a href="{% url 'arsip:index' %}" class="btn btn-secondary">
-                                <i class="bi bi-arrow-left me-1"></i> Kembali
-                            </a>
-                            <a href="{% url 'arsip:unduh_surat' pk=surat.pk %}?download=true" class="btn btn-primary">
-                                <i class="bi bi-download me-1"></i> Unduh
-                            </a>
+                                <a href="{% url 'arsip:index' %}" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left me-1"></i> Kembali
+                                </a>
+                                <a href="{% url 'arsip:edit_surat' pk=surat.pk %}" class="btn btn-warning">
+                                    <i class="bi bi-pencil-square me-1"></i> Edit
+                                </a>
+                                <a href="{% url 'arsip:unduh_surat' pk=surat.pk %}?download=true" class="btn btn-primary">
+                                    <i class="bi bi-download me-1"></i> Unduh
+                                </a>
                         </div>
                     </div>
 

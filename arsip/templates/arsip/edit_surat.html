@@ -1,20 +1,19 @@
 {% extends 'arsip/base.html' %}
 
-{% block title %}Arsipkan Surat Baru{% endblock %}
+{% block title %}Edit Arsip Surat{% endblock %}
 
 {% block content %}
 <div class="container-fluid px-4">
     <div class="mb-4">
-        <h2>Arsip Surat >> Unggah</h2>
-        <p class="text-muted mb-1">Unggah surat yang telah terbit pada form ini untuk diarsipkan.</p>
-        <p class="text-muted">Catatan: Gunakan file PDF.</p>
+        <h2>Arsip Surat >> Edit</h2>
+        <p class="text-muted mb-1">Edit data surat yang telah diarsipkan pada form ini.</p>
+        <p class="text-muted">Catatan: Hanya file PDF yang dapat diunggah.</p>
     </div>
                 
     {% if messages %}
         {% for message in messages %}
             <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %} alert-dismissible fade show" role="alert">
                 {{ message }}
-                        <img src="{{ surat.foto.url }}" alt="Foto Surat" class="img-fluid rounded mx-auto d-block" style="max-height: 400px; margin-top: 32px;">
             </div>
         {% endfor %}
     {% endif %}
@@ -26,34 +25,34 @@
                 <div class="card-body" style="padding:2rem;">
                     <div class="mb-3 d-flex align-items-center">
                         <label for="nomor_surat" class="form-label mb-0 me-3" style="width: 140px;">Nomor Surat</label>
-                        <input type="text" name="nomor_surat" id="nomor_surat" class="form-control" required>
+                        <input type="text" name="nomor_surat" id="nomor_surat" class="form-control" value="{{ surat.nomor_surat }}" required>
                     </div>
                     <div class="mb-3 d-flex align-items-center">
                         <label for="kategori" class="form-label mb-0 me-3" style="width: 140px;">Kategori</label>
                         <select name="kategori" id="kategori" class="form-select" required style="min-width:0;">
                             <option value="">Pilih Kategori</option>
                             {% for kategori in form.fields.kategori.queryset %}
-                                <option value="{{ kategori.id }}">{{ kategori.nama }}</option>
+                                <option value="{{ kategori.id }}" {% if kategori.id == surat.kategori.id %}selected{% endif %}>{{ kategori.nama }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3 d-flex align-items-center">
                         <label for="judul" class="form-label mb-0 me-3" style="width: 140px;">Judul</label>
-                        <input type="text" name="judul" id="judul" class="form-control" required>
+                        <input type="text" name="judul" id="judul" class="form-control" value="{{ surat.judul }}" required>
                     </div>
                     <div class="mb-3 d-flex align-items-center">
                         <label for="file_pdf" class="form-label mb-0 me-3" style="width: 140px;">File Surat (PDF)</label>
-                        <input type="file" name="file_pdf" class="form-control" accept=".pdf" required>
+                        <input type="file" name="file_pdf" class="form-control" accept=".pdf">
+                        {% if surat.file_pdf %}
+                            <a href="{{ surat.file_pdf.url }}" target="_blank" class="ms-3">Lihat File</a>
+                        {% endif %}
                     </div>
                     <div class="mt-4 d-flex gap-2 justify-content-start">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                         <a href="{% url 'arsip:index' %}" class="btn btn-secondary">Kembali</a>
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-            </div>
         </div>
     </div>
 </div>
